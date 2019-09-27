@@ -1,7 +1,8 @@
 package com.ecommerce.albertsons.write.impl;
 
 import com.ecommerce.albertsons.model.CsvItem;
-import com.ecommerce.albertsons.util.FileUtils;
+import com.ecommerce.albertsons.util.ItemFileUtils;
+import com.ecommerce.albertsons.util.StoreItemFileUtils;
 
 import java.util.List;
 import org.slf4j.Logger;
@@ -12,21 +13,21 @@ import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.item.ItemWriter;
 
 
-
-public class LinesWriter implements ItemWriter<CsvItem>, StepExecutionListener {
+public class ItemLinesWriter<C> implements ItemWriter<CsvItem>, StepExecutionListener {
   
-  private final Logger logger = LoggerFactory.getLogger(LinesWriter.class);
-  private FileUtils fu;
+  private final Logger logger = LoggerFactory.getLogger(ItemLinesWriter.class);
+  private ItemFileUtils itemFileUtil;
   
   @Override
   public void beforeStep(StepExecution stepExecution) {
-    fu = new FileUtils("E:\\SafeWay\\STATEMACHINE_FINAL_REPO\\OSIMDBExtractor\\output.csv");
+    itemFileUtil = new ItemFileUtils(
+        "E:\\SafeWay\\OSIM-DB\\OSIM-DBExtractor\\item-output.csv");
     logger.debug("Line Writer initialized.");
   }
   
   @Override
   public ExitStatus afterStep(StepExecution stepExecution) {
-    fu.closeWriter();
+    itemFileUtil.closeWriter();
     logger.debug("Line Writer ended.");
     return ExitStatus.COMPLETED;
   }
@@ -35,10 +36,10 @@ public class LinesWriter implements ItemWriter<CsvItem>, StepExecutionListener {
   public void write(List<? extends CsvItem> lines) throws Exception {
     
     for (CsvItem line : lines) {
-      //logger.info("-W-" + line.getCic());
-      fu.writeLine(line);
+      logger.info("-W-" + line.getCic());
+      itemFileUtil.writeLine(line);
       logger.debug("Wrote line " + line.toString());
     }
-  //  fu.closeWriter();
+    //itemFileUtil.closeWriter();
   }
 }

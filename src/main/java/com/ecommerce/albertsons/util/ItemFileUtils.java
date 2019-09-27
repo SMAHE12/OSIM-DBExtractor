@@ -1,6 +1,7 @@
 package com.ecommerce.albertsons.util;
 
 import com.ecommerce.albertsons.model.CsvItem;
+import com.ecommerce.albertsons.model.CsvStoreItem;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
@@ -9,7 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileUtils {
+public class ItemFileUtils {
   private String fileName;
   private CSVReader CSVReader;
   private CSVWriter CSVWriter;
@@ -17,7 +18,7 @@ public class FileUtils {
   private FileWriter fileWriter;
   private File file;
   
-  public FileUtils(String fileName) {
+  public ItemFileUtils(String fileName) {
     this.fileName = fileName;
   }
   
@@ -27,23 +28,32 @@ public class FileUtils {
     String[] line = CSVReader.readNext();
     if (line == null)
       return null;
-    return new CsvItem(line[0], null,
-        null,
-        null, false,
-        null, null);
+    return new CsvItem(line[0], null, null,null,
+        null,null,null,null,
+        null,null,null,
+        null,null,null);
   }
   
   public void writeLine(CsvItem line) throws Exception {
     if (CSVWriter == null)
       initWriter();
-    String[] lineStr = new String[7];
+    String[] lineStr = new String[13];
+   
     lineStr[0] = line.getCic();
-    lineStr[1] = line.getStoreId();
-    lineStr[2] = "Desc:-" + line.getItemDescription();
-    lineStr[3] = Boolean.toString(line.isOrderable());
-    lineStr[4] = line.getStopBy();
-    lineStr[6] = line.getItemType();
-    
+    lineStr[1] = line.getUpcId();
+    lineStr[2] = line.getInternetDesc();
+    lineStr[3] = line.getProductGroupCd();
+    lineStr[4] = line.getProductGroupNm();
+    lineStr[5] = line.getProductCategoryCd();
+    lineStr[6] = line.getProductCategoryNm();
+    lineStr[7] = line.getProductClassCd();
+    lineStr[8] = line.getProductClassNm();
+    lineStr[9] = line.getRetailSectionCd();
+    lineStr[10] = line.getProductSubClassCdLevel1();
+    lineStr[11] = line.getProductSubClassNmLevel1();
+    lineStr[12] = line.getProductSubClassCdLevel2();
+    lineStr[13] = line.getProductSubClassNmLevel2();
+
     CSVWriter.writeNext(lineStr);
   }
   

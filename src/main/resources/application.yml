@@ -1,5 +1,5 @@
 spring:
   data:
     mongodb:
-      database: osim
+      database: osim-backup
       uri: mongodb://mongodb-osimosimdev:dYVNK1YaknijEKg1N2pNctOT6QkZXBMQXBynUrMgDHcewUXQe90FmJ2TIl65DuHuG5jETLgNxudpfNJhnToTYg==@mongodb-osimosimdev.documents.azure.com:10255/?ssl=true

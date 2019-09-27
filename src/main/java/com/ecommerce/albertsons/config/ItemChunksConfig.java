@@ -1,9 +1,9 @@
 package com.ecommerce.albertsons.config;
 
 import com.ecommerce.albertsons.model.CsvItem;
-import com.ecommerce.albertsons.process.LineProcessor;
-import com.ecommerce.albertsons.read.impl.LineReader;
-import com.ecommerce.albertsons.write.impl.LinesWriter;
+import com.ecommerce.albertsons.process.ItemLineProcessor;
+import com.ecommerce.albertsons.read.impl.ItemLineReader;
+import com.ecommerce.albertsons.write.impl.ItemLinesWriter;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -26,7 +26,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @EnableBatchProcessing
-public class ChunksConfig {
+public class ItemChunksConfig {
   
   @Autowired
   private JobBuilderFactory jobs;
@@ -35,13 +35,13 @@ public class ChunksConfig {
   private StepBuilderFactory steps;
   
   
-  @Bean
+ @Bean
   public JobLauncherTestUtils jobLauncherTestUtils() {
     return new JobLauncherTestUtils();
   }
   
-  /** jobRepository job repository.
-   *
+  /**
+   * jobRepository job repository.
    **/
   @Bean
   public JobRepository jobRepository() throws Exception {
@@ -63,25 +63,25 @@ public class ChunksConfig {
   }
   
   @Bean
-  public ItemReader<CsvItem> itemReader() {
-    return new LineReader();
+  public ItemLineReader<CsvItem> itemLineReader() {
+    return new ItemLineReader();
   }
   
   @Bean
-  public ItemProcessor<CsvItem, CsvItem> itemProcessor() {
-    return new LineProcessor();
+  public ItemLineProcessor<CsvItem, CsvItem> itemLineProcessor() {
+    return new ItemLineProcessor();
   }
   
   @Bean
-  public ItemWriter<CsvItem> itemWriter() {
-    return new LinesWriter();
+  public ItemLinesWriter<CsvItem> itemLineWriter() {
+    return new ItemLinesWriter();
   }
   
   @Bean
   protected Step processLines(ItemReader<CsvItem> reader,
-                              ItemProcessor<CsvItem, CsvItem> processor,
+                              ItemProcessor<CsvItem,CsvItem> processor,
                               ItemWriter<CsvItem> writer) {
-    return steps.get("processLines").<CsvItem, CsvItem>chunk(100)
+    return steps.get("processItemLines").<CsvItem, CsvItem>chunk(100)
         .reader(reader)
         .processor(processor)
         .writer(writer)
@@ -91,8 +91,8 @@ public class ChunksConfig {
   @Bean
   public Job job() {
     return jobs
-        .get("chunksJob")
-        .start(processLines(itemReader(), itemProcessor(), itemWriter()))
+        .get("Fetch_ITEMS_Job")
+        .start(processLines(itemLineReader(), itemLineProcessor(), itemLineWriter()))
         .build();
   }
   

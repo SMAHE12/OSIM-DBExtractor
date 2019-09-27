@@ -1,7 +1,7 @@
 package com.ecommerce.albertsons.batch;
 
 import com.ecommerce.albertsons.DbExtractApplication;
-import com.ecommerce.albertsons.config.ChunksConfig;
+import com.ecommerce.albertsons.config.StoreItemChunksConfig;
 import com.ecommerce.albertsons.service.StoreItemService;
 
 import org.junit.Assert;
@@ -16,9 +16,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes  = ChunksConfig.class)
+@ContextConfiguration(classes  = StoreItemChunksConfig.class)
 @SpringBootTest(classes = DbExtractApplication.class)
-public class CicDataExtractorTest {
+public class TestFetchStoreItemByCIC {
   
   @Autowired private JobLauncherTestUtils jobLauncherTestUtils;
   @Autowired private StoreItemService storeItemService;

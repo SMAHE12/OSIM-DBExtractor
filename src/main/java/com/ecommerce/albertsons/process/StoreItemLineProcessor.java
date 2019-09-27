@@ -1,7 +1,7 @@
 package com.ecommerce.albertsons.process;
 
 import com.ecommerce.albertsons.domian.StoreItemModel;
-import com.ecommerce.albertsons.model.CsvItem;
+import com.ecommerce.albertsons.model.CsvStoreItem;
 import com.ecommerce.albertsons.service.StoreItemService;
 
 import java.util.ArrayList;
@@ -15,12 +15,13 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-public class LineProcessor implements ItemProcessor<CsvItem, CsvItem>, StepExecutionListener {
+public class StoreItemLineProcessor
+    implements ItemProcessor<CsvStoreItem, CsvStoreItem>, StepExecutionListener {
   
   @Autowired
   private StoreItemService storeItemService;
   
-  private final Logger logger = LoggerFactory.getLogger(LineProcessor.class);
+  private final Logger logger = LoggerFactory.getLogger(StoreItemLineProcessor.class);
   
   @Override
   public void beforeStep(StepExecution stepExecution) {
@@ -28,7 +29,7 @@ public class LineProcessor implements ItemProcessor<CsvItem, CsvItem>, StepExecu
   }
   
   @Override
-  public CsvItem process(CsvItem line) throws Exception {
+  public CsvStoreItem process(CsvStoreItem line) throws Exception {
     // do mapping from db
     List<String> cicList = new ArrayList<String>();
     cicList.add(line.getCic());
