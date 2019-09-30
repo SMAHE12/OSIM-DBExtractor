@@ -69,8 +69,10 @@ public class StoreItemFileUtils {
   
   public void closeWriter() {
     try {
-      CSVWriter.close();
-      fileWriter.close();
+      if (CSVWriter != null) {
+        CSVWriter.close();
+        fileWriter.close();
+      }
     } catch (IOException e) {
       System.out.println("Error while closing writer.");
     }

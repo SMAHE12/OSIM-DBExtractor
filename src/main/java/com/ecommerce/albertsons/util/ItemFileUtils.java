@@ -28,7 +28,7 @@ public class ItemFileUtils {
     String[] line = CSVReader.readNext();
     if (line == null)
       return null;
-    return new CsvItem(line[0], null, null,null,
+    return new CsvItem(null, line[0], null,null,
         null,null,null,null,
         null,null,null,
         null,null,null);
@@ -37,7 +37,7 @@ public class ItemFileUtils {
   public void writeLine(CsvItem line) throws Exception {
     if (CSVWriter == null)
       initWriter();
-    String[] lineStr = new String[13];
+    String[] lineStr = new String[14];
    
     lineStr[0] = line.getCic();
     lineStr[1] = line.getUpcId();
@@ -79,8 +79,10 @@ public class ItemFileUtils {
   
   public void closeWriter() {
     try {
-      CSVWriter.close();
-      fileWriter.close();
+      if(CSVWriter != null) {
+        CSVWriter.close();
+        fileWriter.close();
+      }
     } catch (IOException e) {
       System.out.println("Error while closing writer.");
     }

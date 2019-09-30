@@ -34,9 +34,9 @@ public class ItemLinesWriter<C> implements ItemWriter<CsvItem>, StepExecutionLis
   
   @Override
   public void write(List<? extends CsvItem> lines) throws Exception {
-    
+    //logger.info(" Item Writer :::: ");
     for (CsvItem line : lines) {
-      logger.info("-W-" + line.getCic());
+      //logger.info("-W-" + line.getCic());
       itemFileUtil.writeLine(line);
       logger.debug("Wrote line " + line.toString());
     }

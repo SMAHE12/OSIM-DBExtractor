@@ -1,15 +1,19 @@
 package com.ecommerce.albertsons.model;
 
 import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class CsvStoreItem implements Serializable {
-  String Cic;
-  String upcId;
-  String storeId;
-  String itemDescription;
-  boolean isOrderable;
-  String stopBy;
-  String itemType;
+  public String Cic;
+  public String upcId;
+  public String storeId;
+  public String itemDescription;
+  public boolean isOrderable;
+  public String stopBy;
+  public String itemType;
   
   
   public CsvStoreItem(String Cic,
@@ -22,62 +26,6 @@ public class CsvStoreItem implements Serializable {
     this.itemDescription = itemDescription;
     this.isOrderable = isOrderable;
     this.stopBy = stopBy;
-    this.itemType = itemType;
-  }
-  
-  public String getCic() {
-    return Cic;
-  }
-  
-  public void setCic(String cic) {
-    Cic = cic;
-  }
-  
-  public String getUpcId() {
-    return upcId;
-  }
-  
-  public void setUpcId(String upcId) {
-    this.upcId = upcId;
-  }
-  
-  public String getStoreId() {
-    return storeId;
-  }
-  
-  public void setStoreId(String storeId) {
-    this.storeId = storeId;
-  }
-  
-  public String getItemDescription() {
-    return itemDescription;
-  }
-  
-  public void setItemDescription(String itemDescription) {
-    this.itemDescription = itemDescription;
-  }
-  
-  public boolean isOrderable() {
-    return isOrderable;
-  }
-  
-  public void setOrderable(boolean orderable) {
-    isOrderable = orderable;
-  }
-  
-  public String getStopBy() {
-    return stopBy;
-  }
-  
-  public void setStopBy(String stopBy) {
-    this.stopBy = stopBy;
-  }
-  
-  public String getItemType() {
-    return itemType;
-  }
-  
-  public void setItemType(String itemType) {
     this.itemType = itemType;
   }
   
