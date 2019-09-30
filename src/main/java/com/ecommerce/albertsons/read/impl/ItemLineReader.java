@@ -10,6 +10,8 @@ import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Reads CIC From file Used for Reading CIC or UPC from file.
@@ -18,10 +20,12 @@ public class ItemLineReader<C> implements ItemReader<CsvItem>, StepExecutionList
   
   private final Logger logger = LoggerFactory.getLogger(ItemLineReader.class);
   private ItemFileUtils fu;
+  @Value("${upcIdsFile}") String upcIdsFile;
   
   @Override
   public void beforeStep(StepExecution stepExecution) {
-    fu = new ItemFileUtils("Upc-Ids.txt");
+    //fu = new ItemFileUtils("Upc-Ids.txt");
+    fu = new ItemFileUtils(upcIdsFile);
     logger.debug("Line Reader initialized.");
   }
   

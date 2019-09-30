@@ -11,17 +11,20 @@ import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.beans.factory.annotation.Value;
 
 
 public class ItemLinesWriter<C> implements ItemWriter<CsvItem>, StepExecutionListener {
   
   private final Logger logger = LoggerFactory.getLogger(ItemLinesWriter.class);
   private ItemFileUtils itemFileUtil;
+  @Value("${itemsOutputFile}") String itemsOutputFile;
   
   @Override
   public void beforeStep(StepExecution stepExecution) {
-    itemFileUtil = new ItemFileUtils(
-        "E:\\SafeWay\\OSIM-DB\\OSIM-DBExtractor\\item-output.csv");
+    //itemFileUtil = new ItemFileUtils(
+     //   "E:\\SafeWay\\OSIM-DB\\OSIM-DBExtractor\\item-output.csv");
+    itemFileUtil = new ItemFileUtils(itemsOutputFile);
     logger.debug("Line Writer initialized.");
   }
   

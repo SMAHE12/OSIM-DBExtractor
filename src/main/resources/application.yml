@@ -3,3 +3,7 @@ spring:
     mongodb:
       database: osim-backup
       uri: mongodb://mongodb-osimosimdev:dYVNK1YaknijEKg1N2pNctOT6QkZXBMQXBynUrMgDHcewUXQe90FmJ2TIl65DuHuG5jETLgNxudpfNJhnToTYg==@mongodb-osimosimdev.documents.azure.com:10255/?ssl=true
+cicIdsFile: Sample_Input-300000.txt
+upcIdsFile: Upc-Ids.txt
+itemsOutputFile: E:\\SafeWay\\OSIM-DB\\OSIM-DBExtractor\\item-output.csv
+storeItemsOutputFile: E:\\SafeWay\\OSIM-DB\\OSIM-DBExtractor\\output.csv

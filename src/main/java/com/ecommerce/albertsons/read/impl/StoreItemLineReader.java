@@ -9,15 +9,18 @@ import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.beans.factory.annotation.Value;
 
 public class StoreItemLineReader implements ItemReader<CsvStoreItem>, StepExecutionListener {
   
   private final Logger logger = LoggerFactory.getLogger(StoreItemLineReader.class);
   private StoreItemFileUtils fu;
+  @Value("${cicIdsFile}") String cicIdsFile;
   
   @Override
   public void beforeStep(StepExecution stepExecution) {
-    fu = new StoreItemFileUtils("Sample_Input-300000.txt");
+    //fu = new StoreItemFileUtils("Sample_Input-300000.txt");
+    fu = new StoreItemFileUtils(cicIdsFile);
     logger.debug("Line Reader initialized.");
   }
   
