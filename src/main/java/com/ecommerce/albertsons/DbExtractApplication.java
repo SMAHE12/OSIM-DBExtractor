@@ -1,13 +1,13 @@
 package com.ecommerce.albertsons;
 
 import com.ecommerce.albertsons.model.CsvStoreItem;
-import com.ecommerce.albertsons.repository.ItemRepository;
 import com.ecommerce.albertsons.repository.StoreItemRepository;
 import com.ecommerce.albertsons.service.ItemService;
 import com.ecommerce.albertsons.service.StoreItemService;
 
 import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +19,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @SpringBootApplication
 @EnableMongoRepositories(basePackageClasses = {StoreItemRepository.class})
 @Slf4j
+@EnableBatchProcessing
 public class DbExtractApplication {
   
   @Autowired

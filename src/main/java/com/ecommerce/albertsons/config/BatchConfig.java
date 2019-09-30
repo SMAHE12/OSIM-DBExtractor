@@ -1,5 +1,6 @@
 package com.ecommerce.albertsons.config;
 
+import com.ecommerce.albertsons.service.ItemService;
 import com.ecommerce.albertsons.service.StoreItemService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Batch config for DUG Flow.
+ * Batch config .
  */
 @Configuration
 @Slf4j
@@ -20,4 +21,7 @@ public class BatchConfig extends DefaultBatchConfigurer {
   
   @Autowired
   private StoreItemService storeItemService;
+  
+  @Autowired
+  private ItemService itemService;
 }
