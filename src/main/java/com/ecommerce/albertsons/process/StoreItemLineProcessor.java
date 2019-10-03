@@ -25,7 +25,7 @@ public class StoreItemLineProcessor
   
   @Override
   public void beforeStep(StepExecution stepExecution) {
-    logger.debug("Line Processor initialized.");
+    logger.info("Line Processor initialized.");
   }
   
   @Override
@@ -51,7 +51,7 @@ public class StoreItemLineProcessor
   
   @Override
   public ExitStatus afterStep(StepExecution stepExecution) {
-    logger.debug("Line Processor ended.");
+    logger.info("Line Processor ended.");
     return ExitStatus.COMPLETED;
   }
 }

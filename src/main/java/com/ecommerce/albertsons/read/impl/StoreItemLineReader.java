@@ -21,7 +21,7 @@ public class StoreItemLineReader implements ItemReader<CsvStoreItem>, StepExecut
   public void beforeStep(StepExecution stepExecution) {
     //fu = new StoreItemFileUtils("Sample_Input-300000.txt");
     fu = new StoreItemFileUtils(cicIdsFile);
-    logger.debug("Line Reader initialized.");
+    logger.info("Line Reader initialized.");
   }
   
   @Override
@@ -35,7 +35,7 @@ public class StoreItemLineReader implements ItemReader<CsvStoreItem>, StepExecut
   @Override
   public ExitStatus afterStep(StepExecution stepExecution) {
     fu.closeReader();
-    logger.debug("Line Reader ended.");
+    logger.info("Line Reader ended.");
     return ExitStatus.COMPLETED;
   }
 }

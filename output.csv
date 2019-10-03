@@ -1,12 +1,7 @@
-"70056108","3116","Desc:-None","false","Y",,"FLO"
-"70022394","3116","Desc:-None","false","Y",,"FLO"
-"70014919","3116","Desc:-None","false","Y",,"FLO"
-"62100572","3116","Desc:-None","false","Y",,"FLO"
-"6041679","3116","Desc:-None","false","Y",,"FLO"
-"70014363","3116","Desc:-None","false","Y",,"FLO"
-"70056108","3116","Desc:-None","false","Y",,"FLO"
-"70022394","3116","Desc:-None","false","Y",,"FLO"
-"70014919","3116","Desc:-None","false","Y",,"FLO"
-"62100572","3116","Desc:-None","false","Y",,"FLO"
-"6041679","3116","Desc:-None","false","Y",,"FLO"
-"70014363","3116","Desc:-None","false","Y",,"FLO"
+CIC ID,Store ID,Item Desc,IsOrdarable,StopBy,Item Type
+"70056108","3116","Desc:-None","false","Y","FLO",
+"70022394","3116","Desc:-None","false","Y","FLO",
+"70014919","3116","Desc:-None","false","Y","FLO",
+"62100572","3116","Desc:-None","false","Y","FLO",
+"6041679","3116","Desc:-None","false","Y","FLO",
+"70014363","3116","Desc:-None","false","Y","FLO",

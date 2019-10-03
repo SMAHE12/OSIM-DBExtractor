@@ -23,13 +23,13 @@ public class StoreItemLinesWriter implements ItemWriter<CsvStoreItem>, StepExecu
   public void beforeStep(StepExecution stepExecution) {
     //fu = new StoreItemFileUtils("E:\\SafeWay\\OSIM-DB\\OSIM-DBExtractor\\output.csv");
     fu = new StoreItemFileUtils(storeItemsOutputFile);
-    logger.debug("Line Writer initialized.");
+    logger.info("Line Writer initialized.");
   }
   
   @Override
   public ExitStatus afterStep(StepExecution stepExecution) {
     fu.closeWriter();
-    logger.debug("Line Writer ended.");
+    logger.info("Line Writer ended.");
     return ExitStatus.COMPLETED;
   }
   
@@ -39,8 +39,8 @@ public class StoreItemLinesWriter implements ItemWriter<CsvStoreItem>, StepExecu
     for (CsvStoreItem line : lines) {
       //logger.info("-W-" + line.getCic());
       fu.writeLine(line);
-      logger.debug("Wrote line " + line.toString());
+      logger.info("Wrote line " + line.toString());
     }
-  //  fu.closeWriter();
+  fu.closeWriter();
   }
 }

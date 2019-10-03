@@ -24,7 +24,7 @@ public class ItemLineProcessor<C, C1> implements ItemProcessor<CsvItem, CsvItem>
   
   @Override
   public void beforeStep(StepExecution stepExecution) {
-    logger.debug("Item Line Processor initialized.");
+    logger.info("Item Line Processor initialized.");
   }
   
   @Override
@@ -59,7 +59,7 @@ public class ItemLineProcessor<C, C1> implements ItemProcessor<CsvItem, CsvItem>
   
   @Override
   public ExitStatus afterStep(StepExecution stepExecution) {
-    logger.debug("Item Line Processor ended.");
+    logger.info("Item Line Processor ended.");
     return ExitStatus.COMPLETED;
   }
 }

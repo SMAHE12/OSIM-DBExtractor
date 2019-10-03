@@ -25,7 +25,7 @@ public class ItemLinesWriter<C> implements ItemWriter<CsvItem>, StepExecutionLis
     //itemFileUtil = new ItemFileUtils(
      //   "E:\\SafeWay\\OSIM-DB\\OSIM-DBExtractor\\item-output.csv");
     itemFileUtil = new ItemFileUtils(itemsOutputFile);
-    logger.debug("Line Writer initialized.");
+    logger.info("Line Writer initialized.");
   }
   
   @Override
@@ -41,7 +41,7 @@ public class ItemLinesWriter<C> implements ItemWriter<CsvItem>, StepExecutionLis
     for (CsvItem line : lines) {
       //logger.info("-W-" + line.getCic());
       itemFileUtil.writeLine(line);
-      logger.debug("Wrote line " + line.toString());
+      logger.info("Wrote line " + line.toString());
     }
     //itemFileUtil.closeWriter();
   }

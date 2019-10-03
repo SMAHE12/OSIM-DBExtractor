@@ -26,7 +26,7 @@ public class ItemLineReader<C> implements ItemReader<CsvItem>, StepExecutionList
   public void beforeStep(StepExecution stepExecution) {
     //fu = new ItemFileUtils("Upc-Ids.txt");
     fu = new ItemFileUtils(upcIdsFile);
-    logger.debug("Line Reader initialized.");
+    logger.info("Line Reader initialized.");
   }
   
   @Override
@@ -40,7 +40,7 @@ public class ItemLineReader<C> implements ItemReader<CsvItem>, StepExecutionList
   @Override
   public ExitStatus afterStep(StepExecution stepExecution) {
     fu.closeReader();
-    logger.debug("Line Reader ended.");
+    logger.info("Line Reader ended.");
     return ExitStatus.COMPLETED;
   }
 }
