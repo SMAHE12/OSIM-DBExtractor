@@ -33,34 +33,6 @@ public class ItemChunksConfig {
   @Autowired
   private StepBuilderFactory steps;
   
-  
- @Bean
-  public JobLauncherTestUtils jobLauncherTestUtils() {
-    return new JobLauncherTestUtils();
-  }
-  
-  /**
-   * jobRepository job repository.
-   **/
-  @Bean
-  public JobRepository jobRepository() throws Exception {
-    MapJobRepositoryFactoryBean factory = new MapJobRepositoryFactoryBean();
-    factory.setTransactionManager(transactionManager());
-    return (JobRepository) factory.getObject();
-  }
-  
-  @Bean
-  public PlatformTransactionManager transactionManager() {
-    return new ResourcelessTransactionManager();
-  }
-  
-  @Bean
-  public JobLauncher jobLauncher() throws Exception {
-    SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
-    jobLauncher.setJobRepository(jobRepository());
-    return jobLauncher;
-  }
-  
   @Bean
   public ItemLineReader<CsvItem> itemLineReader() {
     return new ItemLineReader();
@@ -77,7 +49,7 @@ public class ItemChunksConfig {
   }
   
   @Bean
-  protected Step processLines(ItemReader<CsvItem> reader,
+  public Step processItemLines(ItemReader<CsvItem> reader,
                               ItemProcessor<CsvItem,CsvItem> processor,
                               ItemWriter<CsvItem> writer) {
     return steps.get("processItemLines").<CsvItem, CsvItem>chunk(100)
@@ -87,12 +59,5 @@ public class ItemChunksConfig {
         .build();
   }
   
-  @Bean
-  public Job job() {
-    return jobs
-        .get("Fetch_ITEMS_Job")
-        .start(processLines(itemLineReader(), itemLineProcessor(), itemLineWriter()))
-        .build();
-  }
   
 }

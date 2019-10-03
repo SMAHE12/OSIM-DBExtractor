@@ -33,34 +33,6 @@ public class StoreItemChunksConfig {
   @Autowired
   private StepBuilderFactory steps;
   
-  
-  @Bean
-  public JobLauncherTestUtils jobLauncherTestUtils() {
-    return new JobLauncherTestUtils();
-  }
-  
-  /** jobRepository job repository.
-   *
-   **/
-  @Bean
-  public JobRepository jobRepository() throws Exception {
-    MapJobRepositoryFactoryBean factory = new MapJobRepositoryFactoryBean();
-    factory.setTransactionManager(transactionManager());
-    return (JobRepository) factory.getObject();
-  }
-  
-  @Bean
-  public PlatformTransactionManager transactionManager() {
-    return new ResourcelessTransactionManager();
-  }
-  
-  @Bean
-  public JobLauncher jobLauncher() throws Exception {
-    SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
-    jobLauncher.setJobRepository(jobRepository());
-    return jobLauncher;
-  }
-  
   @Bean
   public ItemReader<CsvStoreItem> itemReader() {
     return new StoreItemLineReader();
@@ -77,22 +49,15 @@ public class StoreItemChunksConfig {
   }
   
   @Bean
-  protected Step processLines(ItemReader<CsvStoreItem> reader,
+  public Step processStoreItemLines(ItemReader<CsvStoreItem> reader,
                               ItemProcessor<CsvStoreItem, CsvStoreItem> processor,
                               ItemWriter<CsvStoreItem> writer) {
-    return steps.get("processLines").<CsvStoreItem, CsvStoreItem>chunk(100)
+    return steps.get("processStoreItemLines").<CsvStoreItem, CsvStoreItem>chunk(100)
         .reader(reader)
         .processor(processor)
         .writer(writer)
         .build();
   }
   
-  @Bean
-  public Job job() {
-    return jobs
-        .get("Fetch_STORE_ITEMS_Job")
-        .start(processLines(itemReader(), itemProcessor(), itemWriter()))
-        .build();
-  }
   
 }
