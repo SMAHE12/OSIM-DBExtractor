@@ -19,12 +19,13 @@ public class ItemLinesWriter<C> implements ItemWriter<CsvItem>, StepExecutionLis
   private final Logger logger = LoggerFactory.getLogger(ItemLinesWriter.class);
   private ItemFileUtils itemFileUtil;
   @Value("${itemsOutputFile}") String itemsOutputFile;
+  @Value("${itemColumns}") String[] itemColumns;
   
   @Override
   public void beforeStep(StepExecution stepExecution) {
     //itemFileUtil = new ItemFileUtils(
      //   "E:\\SafeWay\\OSIM-DB\\OSIM-DBExtractor\\item-output.csv");
-    itemFileUtil = new ItemFileUtils(itemsOutputFile);
+    itemFileUtil = new ItemFileUtils(itemsOutputFile,itemColumns);
     logger.info("Line Writer initialized.");
   }
   

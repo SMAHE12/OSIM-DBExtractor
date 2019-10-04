@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 public class StoreItemFileUtils {
   private String fileName;
@@ -16,9 +18,11 @@ public class StoreItemFileUtils {
   private FileReader fileReader;
   private FileWriter fileWriter;
   private File file;
+  private String[] storeItemColumns;
   
-  public StoreItemFileUtils(String fileName) {
+  public StoreItemFileUtils(String fileName,String[] storeItemColumns) {
     this.fileName = fileName;
+    this.storeItemColumns = storeItemColumns;
   }
   
   public CsvStoreItem readLine() throws Exception {
@@ -36,15 +40,16 @@ public class StoreItemFileUtils {
   public void writeLine(CsvStoreItem line) throws Exception {
     if (CSVWriter == null)
       initWriter();
-    String[] lineStr = new String[7];
+   /* String[] lineStr = new String[7];
     lineStr[0] = line.getCic();
     lineStr[1] = line.getStoreId();
-    lineStr[2] = "Desc:-" + line.getItemDescription();
+    lineStr[2] = line.getItemDescription();
     lineStr[3] = Boolean.toString(line.isOrderable());
     lineStr[4] = line.getStopBy();
-    lineStr[5] = line.getItemType();
-    
+    lineStr[5] = line.getItemType();*/
+    String[] lineStr = line.getCsvStoreItemLineData().split(",");
     CSVWriter.writeNext(lineStr);
+    CSVWriter.flushQuietly();
   }
   
   private void initReader() throws Exception {
@@ -64,7 +69,10 @@ public class StoreItemFileUtils {
       file.createNewFile();
     }
     if (fileWriter == null) fileWriter = new FileWriter(file, true);
-    if (CSVWriter == null) CSVWriter = new CSVWriter(fileWriter);
+    if (CSVWriter == null) {CSVWriter = new CSVWriter(fileWriter);
+      CSVWriter.writeNext(storeItemColumns);
+      CSVWriter.flushQuietly();
+    }
   }
   
   public void closeWriter() {

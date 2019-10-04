@@ -1,6 +1,7 @@
 package com.ecommerce.albertsons.process;
 
 import com.ecommerce.albertsons.domian.StoreItemModel;
+import com.ecommerce.albertsons.mapper.StoreItemMapper;
 import com.ecommerce.albertsons.model.CsvStoreItem;
 import com.ecommerce.albertsons.service.StoreItemService;
 
@@ -13,6 +14,7 @@ import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 
 public class StoreItemLineProcessor
@@ -20,6 +22,9 @@ public class StoreItemLineProcessor
   
   @Autowired
   private StoreItemService storeItemService;
+  
+  @Value("${storeItemColumns}")
+  String[] storeItemColumns;
   
   private final Logger logger = LoggerFactory.getLogger(StoreItemLineProcessor.class);
   
@@ -38,13 +43,15 @@ public class StoreItemLineProcessor
       return null;
     }
     for (StoreItemModel model : storeItemList) {
-      line.setCic(model.getCorporateItemCd());
-      line.setItemDescription("None");
+      StoreItemMapper mapper = new StoreItemMapper();
+      line = mapper.transformStoreItemToCsvStoreItem(model,line,storeItemColumns);
+      /*line.setCic(model.getCorporateItemCd());
+      line.setItemDescription(model.getItemName());
       line.setItemType(model.getItemType());
       line.setOrderable(model.isOrderable());
       line.setStopBy(model.getStopBuy());
       line.setStoreId(model.getStoreId());
-      line.setUpcId(model.getUpcId());
+      line.setUpcId(model.getUpcId());*/
     }
     return line;
   }

@@ -1,6 +1,7 @@
 package com.ecommerce.albertsons.process;
 
 import com.ecommerce.albertsons.domian.ItemModel;
+import com.ecommerce.albertsons.mapper.ItemMapper;
 import com.ecommerce.albertsons.model.CsvItem;
 import com.ecommerce.albertsons.service.ItemService;
 
@@ -13,12 +14,15 @@ import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 
 public class ItemLineProcessor<C, C1> implements ItemProcessor<CsvItem, CsvItem>, StepExecutionListener {
   
   @Autowired
   private ItemService itemService;
+  @Value("${itemColumns}")
+  String[] itemColumns;
   
   private final Logger logger = LoggerFactory.getLogger(ItemLineProcessor.class);
   
@@ -38,8 +42,9 @@ public class ItemLineProcessor<C, C1> implements ItemProcessor<CsvItem, CsvItem>
     }
     
     CsvItem itemLine = null;
+    ItemMapper mapper = new ItemMapper();
     for (ItemModel model : itemList) {
-      itemLine = new CsvItem(model.getCorporateItemCd(),
+      /*itemLine = new CsvItem(model.getCorporateItemCd(),
           model.getUpcId(),
           model.getItemDescription().getInternetItemDsc(),
           model.getProductHierarchy().getProductGroup().getProductGroupCd(),
@@ -52,7 +57,8 @@ public class ItemLineProcessor<C, C1> implements ItemProcessor<CsvItem, CsvItem>
           model.getProductHierarchy().getProductSubClassLevel1().getProductSubClassCd(),
           model.getProductHierarchy().getProductSubClassLevel1().getProductSubClassNm(),
           model.getProductHierarchy().getProductSubClassLevel2().getProductSubClassCd(),
-          model.getProductHierarchy().getProductSubClassLevel2().getProductSubClassNm());
+          model.getProductHierarchy().getProductSubClassLevel2().getProductSubClassNm());*/
+      itemLine = mapper.transformItemToCsvItem(model,line,itemColumns);
     }
     return itemLine;
   }

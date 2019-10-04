@@ -21,11 +21,12 @@ public class ItemLineReader<C> implements ItemReader<CsvItem>, StepExecutionList
   private final Logger logger = LoggerFactory.getLogger(ItemLineReader.class);
   private ItemFileUtils fu;
   @Value("${upcIdsFile}") String upcIdsFile;
+  @Value("${itemColumns}") String[] itemColumns;
   
   @Override
   public void beforeStep(StepExecution stepExecution) {
     //fu = new ItemFileUtils("Upc-Ids.txt");
-    fu = new ItemFileUtils(upcIdsFile);
+    fu = new ItemFileUtils(upcIdsFile,itemColumns);
     logger.info("Line Reader initialized.");
   }
   

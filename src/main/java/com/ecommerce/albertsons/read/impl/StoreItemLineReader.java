@@ -16,11 +16,11 @@ public class StoreItemLineReader implements ItemReader<CsvStoreItem>, StepExecut
   private final Logger logger = LoggerFactory.getLogger(StoreItemLineReader.class);
   private StoreItemFileUtils fu;
   @Value("${cicIdsFile}") String cicIdsFile;
+  @Value("${storeItemColumns}") String[] storeItemColumns;
   
   @Override
   public void beforeStep(StepExecution stepExecution) {
-    //fu = new StoreItemFileUtils("Sample_Input-300000.txt");
-    fu = new StoreItemFileUtils(cicIdsFile);
+    fu = new StoreItemFileUtils(cicIdsFile,storeItemColumns );
     logger.info("Line Reader initialized.");
   }
   

@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CsvItem implements Serializable {
+  public String _id;
   public String Cic;
   public String upcId;
   public String internetDesc;
@@ -21,6 +22,8 @@ public class CsvItem implements Serializable {
   public String productSubClassNmLevel1;
   public String productSubClassCdLevel2;
   public String productSubClassNmLevel2;
+  public String csvItemLineData;
+  
   
   public CsvItem(String Cic,
                  String upcId,

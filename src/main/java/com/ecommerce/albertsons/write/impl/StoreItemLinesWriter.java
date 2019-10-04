@@ -18,11 +18,12 @@ public class StoreItemLinesWriter implements ItemWriter<CsvStoreItem>, StepExecu
   private final Logger logger = LoggerFactory.getLogger(StoreItemLinesWriter.class);
   private StoreItemFileUtils fu;
   @Value("${storeItemsOutputFile}") String storeItemsOutputFile;
+  @Value("${storeItemColumns}") String[] storeItemColumns;
   
   @Override
   public void beforeStep(StepExecution stepExecution) {
     //fu = new StoreItemFileUtils("E:\\SafeWay\\OSIM-DB\\OSIM-DBExtractor\\output.csv");
-    fu = new StoreItemFileUtils(storeItemsOutputFile);
+    fu = new StoreItemFileUtils(storeItemsOutputFile,storeItemColumns);
     logger.info("Line Writer initialized.");
   }
   
@@ -41,6 +42,5 @@ public class StoreItemLinesWriter implements ItemWriter<CsvStoreItem>, StepExecu
       fu.writeLine(line);
       logger.info("Wrote line " + line.toString());
     }
-  fu.closeWriter();
   }
 }

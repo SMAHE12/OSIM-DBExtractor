@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import org.springframework.beans.factory.annotation.Value;
 
 public class ItemFileUtils {
   private String fileName;
@@ -17,9 +18,11 @@ public class ItemFileUtils {
   private FileReader fileReader;
   private FileWriter fileWriter;
   private File file;
+  private String[] itemColumns;
   
-  public ItemFileUtils(String fileName) {
+  public ItemFileUtils(String fileName, String[] itemColumns) {
     this.fileName = fileName;
+    this.itemColumns = itemColumns;
   }
   
   public CsvItem readLine() throws Exception {
@@ -37,7 +40,7 @@ public class ItemFileUtils {
   public void writeLine(CsvItem line) throws Exception {
     if (CSVWriter == null)
       initWriter();
-    String[] lineStr = new String[14];
+    /*String[] lineStr = new String[14];
    
     lineStr[0] = line.getCic();
     lineStr[1] = line.getUpcId();
@@ -52,8 +55,8 @@ public class ItemFileUtils {
     lineStr[10] = line.getProductSubClassCdLevel1();
     lineStr[11] = line.getProductSubClassNmLevel1();
     lineStr[12] = line.getProductSubClassCdLevel2();
-    lineStr[13] = line.getProductSubClassNmLevel2();
-
+    lineStr[13] = line.getProductSubClassNmLevel2();*/
+    String[] lineStr = line.getCsvItemLineData().split(",");
     CSVWriter.writeNext(lineStr);
   }
   
@@ -74,7 +77,11 @@ public class ItemFileUtils {
       file.createNewFile();
     }
     if (fileWriter == null) fileWriter = new FileWriter(file, true);
-    if (CSVWriter == null) CSVWriter = new CSVWriter(fileWriter);
+    if (CSVWriter == null) {
+      CSVWriter = new CSVWriter(fileWriter);
+      CSVWriter.writeNext(itemColumns);
+      CSVWriter.flushQuietly();
+    }
   }
   
   public void closeWriter() {
