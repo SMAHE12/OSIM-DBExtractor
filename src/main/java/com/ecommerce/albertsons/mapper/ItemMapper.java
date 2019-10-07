@@ -9,21 +9,24 @@ public class ItemMapper {
   public CsvItem transformItemToCsvItem(ItemModel itemModel, CsvItem csvItem,
                                         String[] itemColumns) {
     StringBuilder newString = new StringBuilder("");
-    try {
-      for (String column : itemColumns) {
-        if (column.contains(".")) {
-          newString.append(PropertyUtils.getNestedProperty(itemModel, column));
-          newString.append(",");
-        } else {
-          newString.append(PropertyUtils.getProperty(itemModel, column));
-          newString.append(",");
-        }
-      }
-      
-    } catch (Exception e) {
-      System.out.println(e);
+    
+    for (String column : itemColumns) {
+      newString.append(getProperty(itemModel, column) + ",");
     }
     csvItem.setCsvItemLineData(newString.toString());
     return csvItem;
+  }
+  
+  private String getProperty(ItemModel itemModel, String column) {
+    try {
+      if (column.contains(".")) {
+        return PropertyUtils.getNestedProperty(itemModel, column).toString();
+      } else {
+        return PropertyUtils.getProperty(itemModel, column).toString();
+      }
+    } catch (Exception e) {
+      System.out.println(e);
+      return "";
+    }
   }
 }

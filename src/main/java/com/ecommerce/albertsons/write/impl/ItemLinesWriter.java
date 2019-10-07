@@ -42,7 +42,7 @@ public class ItemLinesWriter<C> implements ItemWriter<CsvItem>, StepExecutionLis
     for (CsvItem line : lines) {
       //logger.info("-W-" + line.getCic());
       itemFileUtil.writeLine(line);
-      logger.info("Wrote line " + line.toString());
+      logger.info("Upc data for : "+line.getUpcId()+" written ");
     }
     //itemFileUtil.closeWriter();
   }
