@@ -13,7 +13,7 @@ public class StoreItemMapper {
                                                        String[] storeItemColumns) {
     StringBuilder newString = new StringBuilder("");
     for (String column : storeItemColumns) {
-      newString.append(getProperty(storeItemModel, column) + ",");
+      newString.append(getProperty(storeItemModel, column) + "-,-");
       csvItem.setCsvStoreItemLineData(newString.toString());
     }
     return csvItem;

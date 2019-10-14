@@ -11,7 +11,7 @@ public class ItemMapper {
     StringBuilder newString = new StringBuilder("");
     
     for (String column : itemColumns) {
-      newString.append(getProperty(itemModel, column) + ",");
+      newString.append(getProperty(itemModel, column) + "-,-");
     }
     csvItem.setCsvItemLineData(newString.toString());
     return csvItem;

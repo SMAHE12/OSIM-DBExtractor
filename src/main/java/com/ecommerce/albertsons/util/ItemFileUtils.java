@@ -56,7 +56,7 @@ public class ItemFileUtils {
     lineStr[11] = line.getProductSubClassNmLevel1();
     lineStr[12] = line.getProductSubClassCdLevel2();
     lineStr[13] = line.getProductSubClassNmLevel2();*/
-    String[] lineStr = line.getCsvItemLineData().split(",");
+    String[] lineStr = line.getCsvItemLineData().split("-,-");
     CSVWriter.writeNext(lineStr);
   }
   

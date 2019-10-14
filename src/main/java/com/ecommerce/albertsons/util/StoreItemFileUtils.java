@@ -47,7 +47,7 @@ public class StoreItemFileUtils {
     lineStr[3] = Boolean.toString(line.isOrderable());
     lineStr[4] = line.getStopBy();
     lineStr[5] = line.getItemType();*/
-    String[] lineStr = line.getCsvStoreItemLineData().split(",");
+    String[] lineStr = line.getCsvStoreItemLineData().split("-,-");
     CSVWriter.writeNext(lineStr);
     CSVWriter.flushQuietly();
   }
