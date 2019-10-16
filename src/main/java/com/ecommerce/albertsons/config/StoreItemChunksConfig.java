@@ -5,6 +5,7 @@ import com.ecommerce.albertsons.process.StoreItemLineProcessor;
 import com.ecommerce.albertsons.read.impl.StoreItemLineReader;
 import com.ecommerce.albertsons.write.impl.StoreItemLinesWriter;
 
+import java.util.List;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -30,20 +31,20 @@ public class StoreItemChunksConfig {
   }
   
   @Bean
-  public ItemProcessor<CsvStoreItem, CsvStoreItem> itemProcessor() {
+  public ItemProcessor<CsvStoreItem, List<CsvStoreItem>> itemProcessor() {
     return new StoreItemLineProcessor();
   }
   
   @Bean
-  public ItemWriter<CsvStoreItem> itemWriter() {
+  public ItemWriter<List<CsvStoreItem>> itemWriter() {
     return new StoreItemLinesWriter();
   }
   
   @Bean
   public Step processStoreItemLines(ItemReader<CsvStoreItem> reader,
-                                    ItemProcessor<CsvStoreItem, CsvStoreItem> processor,
-                                    ItemWriter<CsvStoreItem> writer) {
-    return steps.get("processStoreItemLines").<CsvStoreItem, CsvStoreItem>chunk(100)
+                                    ItemProcessor<CsvStoreItem, List<CsvStoreItem>> processor,
+                                    ItemWriter<List<CsvStoreItem>> writer) {
+    return steps.get("processStoreItemLines").<CsvStoreItem, List<CsvStoreItem>>chunk(100)
         .reader(reader)
         .processor(processor)
         .writer(writer)

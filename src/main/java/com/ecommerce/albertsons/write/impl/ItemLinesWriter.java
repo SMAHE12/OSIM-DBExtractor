@@ -14,7 +14,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Value;
 
 
-public class ItemLinesWriter<C> implements ItemWriter<CsvItem>, StepExecutionListener {
+public class ItemLinesWriter<C> implements ItemWriter<List<CsvItem>>, StepExecutionListener {
   
   private final Logger logger = LoggerFactory.getLogger(ItemLinesWriter.class);
   private ItemFileUtils itemFileUtil;
@@ -37,12 +37,14 @@ public class ItemLinesWriter<C> implements ItemWriter<CsvItem>, StepExecutionLis
   }
   
   @Override
-  public void write(List<? extends CsvItem> lines) throws Exception {
+  public void write(List<? extends List<CsvItem>> lines) throws Exception {
     //logger.info(" Item Writer :::: ");
-    for (CsvItem line : lines) {
+    for (List<CsvItem> multiLine : lines) {
+      for(CsvItem line : multiLine){
+        itemFileUtil.writeLine(line);
+        logger.info("Item data for id: "+line.get_id()+" written ");
+      }
       //logger.info("-W-" + line.getCic());
-      itemFileUtil.writeLine(line);
-      logger.info("Upc data for : "+line.getUpcId()+" written ");
     }
     //itemFileUtil.closeWriter();
   }

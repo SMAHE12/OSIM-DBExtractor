@@ -24,6 +24,7 @@ public class CsvItem implements Serializable {
   public String productSubClassNmLevel2;
   public String csvItemLineData;
   
+  public CsvItem(){}
   
   public CsvItem(String Cic,
                  String upcId,

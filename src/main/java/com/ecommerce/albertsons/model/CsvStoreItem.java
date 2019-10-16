@@ -16,6 +16,10 @@ public class CsvStoreItem implements Serializable {
   public String itemType;
   public String csvStoreItemLineData;
   
+  public CsvStoreItem(){
+  
+  }
+  
   public CsvStoreItem(String Cic,
                       String upcId, String storeId,
                       String itemDescription, boolean isOrderable,

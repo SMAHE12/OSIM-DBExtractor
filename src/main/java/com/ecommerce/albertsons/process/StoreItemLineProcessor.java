@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 
 public class StoreItemLineProcessor
-    implements ItemProcessor<CsvStoreItem, CsvStoreItem>, StepExecutionListener {
+    implements ItemProcessor<CsvStoreItem, List<CsvStoreItem>>, StepExecutionListener {
   
   @Autowired
   private StoreItemService storeItemService;
@@ -34,26 +34,23 @@ public class StoreItemLineProcessor
   }
   
   @Override
-  public CsvStoreItem process(CsvStoreItem line) throws Exception {
+  public List<CsvStoreItem> process(CsvStoreItem line) throws Exception {
     // do mapping from db
     List<String> cicList = new ArrayList<String>();
+    List<CsvStoreItem> storeItemLineList = new ArrayList<CsvStoreItem>();
     cicList.add(line.getCic());
     List<StoreItemModel> storeItemList = storeItemService.findByCorporateItemCd(cicList);
     if(storeItemList.size()==0){
       return null;
     }
+    StoreItemMapper mapper = new StoreItemMapper();
     for (StoreItemModel model : storeItemList) {
-      StoreItemMapper mapper = new StoreItemMapper();
-      line = mapper.transformStoreItemToCsvStoreItem(model,line,storeItemColumns);
-      /*line.setCic(model.getCorporateItemCd());
-      line.setItemDescription(model.getItemName());
-      line.setItemType(model.getItemType());
-      line.setOrderable(model.isOrderable());
-      line.setStopBy(model.getStopBuy());
-      line.setStoreId(model.getStoreId());
-      line.setUpcId(model.getUpcId());*/
+      CsvStoreItem storeItem = new CsvStoreItem();
+      storeItem.setCic(model.getCorporateItemCd());
+      storeItem = mapper.transformStoreItemToCsvStoreItem(model,storeItem,storeItemColumns);
+      storeItemLineList.add(storeItem);
     }
-    return line;
+    return storeItemLineList;
   }
   
   @Override

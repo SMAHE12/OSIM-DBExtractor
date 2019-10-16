@@ -13,7 +13,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Value;
 
 
-public class StoreItemLinesWriter implements ItemWriter<CsvStoreItem>, StepExecutionListener {
+public class StoreItemLinesWriter implements ItemWriter<List<CsvStoreItem>>, StepExecutionListener {
   
   private final Logger logger = LoggerFactory.getLogger(StoreItemLinesWriter.class);
   private StoreItemFileUtils fu;
@@ -35,12 +35,14 @@ public class StoreItemLinesWriter implements ItemWriter<CsvStoreItem>, StepExecu
   }
   
   @Override
-  public void write(List<? extends CsvStoreItem> lines) throws Exception {
+  public void write(List<? extends List<CsvStoreItem>> lines) throws Exception {
     
-    for (CsvStoreItem line : lines) {
-      //logger.info("-W-" + line.getCic());
-      fu.writeLine(line);
-      logger.info("Wrote line " + line.toString());
+    for(List<CsvStoreItem> multiLines : lines){
+      for (CsvStoreItem line : multiLines) {
+        //logger.info("-W-" + line.getCic());
+        fu.writeLine(line);
+        logger.info("Wrote line For CIC : " + line.getCic());
+      }
     }
   }
 }

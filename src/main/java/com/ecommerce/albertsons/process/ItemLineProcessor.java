@@ -17,7 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 
-public class ItemLineProcessor<C, C1> implements ItemProcessor<CsvItem, CsvItem>, StepExecutionListener {
+public class ItemLineProcessor<C, C1>
+    implements ItemProcessor<CsvItem, List<CsvItem>>, StepExecutionListener {
   
   @Autowired
   private ItemService itemService;
@@ -32,7 +33,7 @@ public class ItemLineProcessor<C, C1> implements ItemProcessor<CsvItem, CsvItem>
   }
   
   @Override
-  public CsvItem process(CsvItem line) throws Exception {
+  public List<CsvItem> process(CsvItem line) throws Exception {
     // do mapping from db
     List<String> upcList = new ArrayList<String>();
     upcList.add(line.getUpcId());
@@ -40,27 +41,17 @@ public class ItemLineProcessor<C, C1> implements ItemProcessor<CsvItem, CsvItem>
     if (itemList.size() == 0) {
       return null;
     }
+    List processedItems = new ArrayList();
     
     CsvItem itemLine = null;
     ItemMapper mapper = new ItemMapper();
+    
     for (ItemModel model : itemList) {
-      /*itemLine = new CsvItem(model.getCorporateItemCd(),
-          model.getUpcId(),
-          model.getItemDescription().getInternetItemDsc(),
-          model.getProductHierarchy().getProductGroup().getProductGroupCd(),
-          model.getProductHierarchy().getProductGroup().getProductGroupNm(),
-          model.getProductHierarchy().getProductCategory().getProductCategoryCd(),
-          model.getProductHierarchy().getProductCategory().getProductCategoryNm(),
-          model.getProductHierarchy().getProductClass().getProductClassCd(),
-          model.getProductHierarchy().getProductClass().getProductClassNm(),
-          model.getProductHierarchy().getProductClass().getRetailSectionCd(),
-          model.getProductHierarchy().getProductSubClassLevel1().getProductSubClassCd(),
-          model.getProductHierarchy().getProductSubClassLevel1().getProductSubClassNm(),
-          model.getProductHierarchy().getProductSubClassLevel2().getProductSubClassCd(),
-          model.getProductHierarchy().getProductSubClassLevel2().getProductSubClassNm());*/
-      itemLine = mapper.transformItemToCsvItem(model,line,itemColumns);
+      itemLine = new CsvItem();
+      itemLine.set_id(model.getId());
+      processedItems.add(mapper.transformItemToCsvItem(model, itemLine, itemColumns));
     }
-    return itemLine;
+    return processedItems;
   }
   
   @Override
