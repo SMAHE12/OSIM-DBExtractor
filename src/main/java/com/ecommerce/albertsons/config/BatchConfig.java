@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class BatchConfig extends DefaultBatchConfigurer {
   
-  @Value("${scheduler.order.batchSize:50}")
+  @Value("${scheduler.order.batchSize:5000}")
   private Integer fetchSize;
   
   @Autowired
