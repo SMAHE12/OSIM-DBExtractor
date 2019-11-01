@@ -64,9 +64,7 @@ public class ItemFileUtils {
     ClassLoader classLoader = this
         .getClass()
         .getClassLoader();
-    if (file == null) file = new File(classLoader
-        .getResource(fileName)
-        .getFile());
+    if (file == null) file = new File(fileName);
     if (fileReader == null) fileReader = new FileReader(file);
     if (CSVReader == null) CSVReader = new CSVReader(fileReader);
   }

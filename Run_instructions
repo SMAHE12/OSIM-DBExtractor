@@ -1,7 +1,3 @@
-# OSIM-DBExtractor
-Store item extraction TAN-1195
-
-Run Instructions:
 Step 1 :
  1) Make sure the application yml has the required inputs
 2) cicIdsFile: Store Item input file path for example E:\extractor\Sample_Input-300000.txt

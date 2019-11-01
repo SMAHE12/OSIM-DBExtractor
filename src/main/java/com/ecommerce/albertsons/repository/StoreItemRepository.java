@@ -8,6 +8,6 @@ import org.springframework.data.mongodb.repository.Query;
 
 public interface StoreItemRepository extends MongoRepository<StoreItemModel, String> {
 
-  @Query(value = "{'upcId':{ '$in':?0} , 'storeId': '3116'}")
+  @Query(value = "{'upcId':{ '$in':?0} , 'storeId': '1574'}")
   List<StoreItemModel> findByCorporateItemCd(List<String> cicList);
 }

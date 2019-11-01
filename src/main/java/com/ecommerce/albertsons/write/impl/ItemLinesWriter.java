@@ -2,7 +2,6 @@ package com.ecommerce.albertsons.write.impl;
 
 import com.ecommerce.albertsons.model.CsvItem;
 import com.ecommerce.albertsons.util.ItemFileUtils;
-import com.ecommerce.albertsons.util.StoreItemFileUtils;
 
 import java.util.List;
 import org.slf4j.Logger;

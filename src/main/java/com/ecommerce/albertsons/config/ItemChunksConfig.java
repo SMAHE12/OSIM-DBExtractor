@@ -44,7 +44,7 @@ public class ItemChunksConfig {
   public Step processItemLines(ItemReader<CsvItem> reader,
                                ItemProcessor<CsvItem, List<CsvItem>> processor,
                                ItemWriter<List<CsvItem>> writer) {
-    return steps.get("processItemLines").<CsvItem, List<CsvItem>>chunk(100)
+    return steps.get("processItemLines").<CsvItem, List<CsvItem>>chunk(1000)
         .reader(reader)
         .processor(processor)
         .writer(writer)

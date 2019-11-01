@@ -41,7 +41,7 @@ public class StoreItemLinesWriter implements ItemWriter<List<CsvStoreItem>>, Ste
       for (CsvStoreItem line : multiLines) {
         //logger.info("-W-" + line.getCic());
         fu.writeLine(line);
-        logger.info("Wrote line For CIC : " + line.getCic());
+        logger.info("Wrote line For UPC  : " + line.toString());
       }
     }
   }

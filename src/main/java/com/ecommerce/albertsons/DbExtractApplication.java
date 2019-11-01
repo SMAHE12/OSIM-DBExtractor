@@ -6,10 +6,12 @@ import com.ecommerce.albertsons.model.CsvStoreItem;
 import com.ecommerce.albertsons.repository.StoreItemRepository;
 import com.ecommerce.albertsons.service.ItemService;
 import com.ecommerce.albertsons.service.StoreItemService;
+import com.ecommerce.albertsons.util.Constants;
 
 import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -49,15 +51,18 @@ public class DbExtractApplication {
   @Autowired
   private ItemChunksConfig itemChunksConfig;
   
-  @Autowired
+ /* @Autowired
   @Qualifier("jobStoreItems")
-  private Job jobStoreItems;
+  private Job jobStoreItems;*/
   
   @Autowired
   @Qualifier("jobItems")
   private Job jobItems;
   
+  private static String jobName = null;
+  
   public static void main(String[] args) {
+    jobName = args[0];
     SpringApplication.run(DbExtractApplication.class, args);
     
   }
@@ -94,24 +99,35 @@ public class DbExtractApplication {
     return jobLauncher;
   }
   
-  @Bean
+  /*@Bean
   public Job jobStoreItems() {
-    return jobs
-        .get("Fetch_STORE_ITEMS_Job")
-        .start(storeItemChunksConfig.processStoreItemLines(storeItemChunksConfig.itemReader(),
-            storeItemChunksConfig.itemProcessor(), storeItemChunksConfig.itemWriter()))
-        .build();
-  }
+    if (Constants.STORE_ITEM.equals(jobName)) {
+      return jobs
+          .get("Fetch_STORE_ITEMS_Job")
+          .start(storeItemChunksConfig.processStoreItemLines(storeItemChunksConfig.itemReader(),
+              storeItemChunksConfig.itemProcessor(), storeItemChunksConfig.itemWriter()))
+          .build();
+    } else{
+      return jobs.get("NO_JOB").start((Step) null).build();
+    }
+  }*/
   @Bean
   public Job jobItems() {
-    return jobs
-        .get("Fetch_ITEMS_Job")
-        .start(itemChunksConfig.processItemLines(
-            itemChunksConfig.itemLineReader(),
-            itemChunksConfig.itemLineProcessor(),
-            itemChunksConfig.itemLineWriter()))
-        .build();
+    if (Constants.ITEMS.equals(jobName)) {
+      return jobs
+          .get("Fetch_ITEMS_Job")
+          .start(itemChunksConfig.processItemLines(
+              itemChunksConfig.itemLineReader(),
+              itemChunksConfig.itemLineProcessor(),
+              itemChunksConfig.itemLineWriter()))
+          .build();
+    } else if (Constants.STORE_ITEM.equals(jobName)) {
+      return jobs
+          .get("Fetch_STORE_ITEMS_Job")
+          .start(storeItemChunksConfig.processStoreItemLines(storeItemChunksConfig.itemReader(),
+              storeItemChunksConfig.itemProcessor(), storeItemChunksConfig.itemWriter()))
+          .build();
+    }
+    return null;
   }
-  
-  
 }
